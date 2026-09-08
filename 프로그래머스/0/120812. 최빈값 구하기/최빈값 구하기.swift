@@ -1,14 +1,16 @@
 import Foundation
 
 func solution(_ array:[Int]) -> Int {
-    var result: [Int] = Array(repeating: 0, count: 1001)
+    var arr = Array(repeating: 0, count: 1000)
     
-    for n in array {
-        result[n] += 1
+    for i in array {
+        arr[i] += 1
     }
     
-    let max = result.max()!
-    let count = result.filter { $0 == max }
-
-    return count.count != 1 ? -1 : result.firstIndex(of: max)!
+    let max = arr.max()!
+    
+    if arr.filter { $0 == max }.count == 1 {
+        return arr.firstIndex(of: max)!
+    }
+    return -1
 }
