@@ -1,11 +1,14 @@
 import Foundation
 
 func solution(_ n:Int) -> Int {
-    var result = 1
-    
-    while result * 6 % n != 0 {
-        result += 1
+    func gcd(_ a: Int, _ b : Int) -> Int {
+        if b == 0 { return a }
+        return gcd(b, a % b)
     }
     
-    return result
+    func lcm(_ a: Int, _ b: Int) -> Int {
+        return a * b / gcd(max(a, b), min(a, b))
+    }
+    
+    return lcm(6, n) / 6
 }
