@@ -1,5 +1,5 @@
 import Foundation
 
-func solution(_ slice:Int, _ n:Int) -> Int {  
-    return Int(ceil(Double(n) / Double(slice)))
+func solution(_ slice:Int, _ n:Int) -> Int {
+    return n / slice + (n % slice > 0 ? 1 : 0)
 }
