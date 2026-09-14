@@ -1,12 +1,7 @@
 import Foundation
 
 func solution(_ age:Int) -> String {
-    var result: String = ""
-    
-    for n in String(age) {
-        let n = Int(String(n))!
-        result += String(UnicodeScalar(97+n)!)
-    }
-    
-    return result
+    let ageNumbers: [Int] = Array(String(age)).map { Int(String($0))! }
+    let ageCharacters: [Character] = ageNumbers.map { Character(UnicodeScalar(97 + $0)!) }
+    return String(ageCharacters)
 }
