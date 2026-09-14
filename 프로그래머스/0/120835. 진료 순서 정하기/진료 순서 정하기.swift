@@ -1,12 +1,13 @@
 import Foundation
 
 func solution(_ emergency:[Int]) -> [Int] {
-    var order = emergency.sorted(by: >)
-    var result: [Int] = []
-    
-    for priority in emergency {
-        result.append(order.firstIndex(of: priority)! + 1)
+    return emergency.map {
+        var priority = 1
+        var current = $0
+        emergency.forEach {
+            if $0 > current { priority += 1 }
+        }
+        
+        return priority
     }
-    
-    return result
 }
