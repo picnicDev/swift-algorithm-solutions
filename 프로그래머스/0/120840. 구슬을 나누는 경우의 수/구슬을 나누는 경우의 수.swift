@@ -1,18 +1,12 @@
 import Foundation
 
 func solution(_ balls:Int, _ share:Int) -> Int {
-
-    let k = min(share, balls - share)
-    
-    if k == 0 {
-        return 1
-    }
-    
+    let r = min(share, balls - share)
     var result = 1
 
-    for i in 0..<k {
-        result *= (balls - i)
-        result /= (i + 1)
+    if r == 0 { return 1 }
+    for i in 1...r {
+        result = result * (balls - r + i) / i
     }
 
     return result
