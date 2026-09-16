@@ -1,14 +1,12 @@
 import Foundation
 
 func solution(_ numbers:[Int], _ k:Int) -> Int {
-    var currentPlayer = 0
-    var count = 1
+    var currentIndex = 0
     
-    while count < k {
-        currentPlayer = (currentPlayer + 2) % numbers.count
-        count += 1
+    if k == 1 { return numbers[currentIndex] }
+    for i in 2...k {
+        currentIndex = (currentIndex + 2) % numbers.count
     }
     
-    
-    return currentPlayer + 1
+    return numbers[currentIndex]
 }
