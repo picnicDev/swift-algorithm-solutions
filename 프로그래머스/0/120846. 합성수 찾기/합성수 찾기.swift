@@ -1,26 +1,17 @@
 import Foundation
 
 func solution(_ n:Int) -> Int {
-    var result = 0
+    guard n > 3 else { return 0 }
     
-    for i in 1...n {
-        if isValid(i) { result += 1}
-    }
-
-    return result
-}
-
-func isValid(_ n: Int) -> Bool {
-    var numberOfDivisor = 2
+    var net = Array(repeating: true, count: n+1)
+    net[0] = false
     
-    if n < 3 { return false }
     
-    for i in 2..<Int(Double(n))+1 {
-        if n % i == 0 { 
-            numberOfDivisor += 1
-            if numberOfDivisor > 3 { return true }
+    for i in 2...Int(sqrt(Double(n))) {
+        for j in stride(from: i * i, through: n, by: i) {
+            net[j] = false
         }
     }
     
-    return false
+    return net.filter { !$0 }.count - 1
 }
