@@ -1,14 +1,13 @@
 import Foundation
 
 func solution(_ n:Int) -> Int {
-    var mul = 1
-    var i = 1
-    
-    while true {
-        mul *= i
-        
-        if mul > n { return i - 1 }
-        
-        i += 1
+    var answer = 1
+    for i in 1...10 {
+        answer *= i
+        if answer > n {
+            return i - 1
+        }
     }
+    
+    return 10
 }
