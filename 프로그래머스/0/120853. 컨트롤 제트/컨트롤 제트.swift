@@ -1,15 +1,12 @@
 import Foundation
 
 func solution(_ s:String) -> Int {
-    var stack: [Int] = []
-    let s = s.split(separator: " ").map { String($0) }
+    var stack = [Int]()
+    let inputs = s.split(separator: " ")
     
-    for c in s {
-        if let n = Int(c) {
-            stack.append(n)
-        } else {
-            stack.removeLast()
-        }
+    inputs.forEach { 
+        if $0 == "Z" { stack.removeLast() }
+        else if $0 != "Z" { stack.append(Int($0)!) }
     }
     
     return stack.reduce(0,+)
