@@ -1,21 +1,19 @@
 import Foundation
 
 func solution(_ array:[Int], _ n:Int) -> Int {
-    var minDiff = Int.max
-    var result = array.first!
+    var diff = 99
+    var filtered = [Int]()
     
-    for num in array {
-        let diff = abs(num - n)
-        print("diff \(diff), minDiff: \(minDiff)")
-        if diff == minDiff {
-            result = min(num, result)
-            minDiff = diff
-        } else if diff < minDiff { 
-            result = num
-            minDiff = diff
+    array.forEach {
+        let currentDiff = abs($0 - n)
+        if currentDiff < diff {
+            filtered = []
+            filtered.append($0)
+            diff = currentDiff
+        } else if currentDiff == diff {
+            filtered.append($0)
         }
-        
     }
     
-    return result
+    return filtered.min()!
 }
