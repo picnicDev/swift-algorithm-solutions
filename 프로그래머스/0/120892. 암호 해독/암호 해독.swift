@@ -1,10 +1,12 @@
 import Foundation
 
 func solution(_ cipher:String, _ code:Int) -> String {
-    var result = ""
-    let cipherArr = Array(cipher)
+    var result: String = ""
     
+    for i in stride(from: code - 1, to: cipher.count, by: code) {
+        let index = cipher.index(cipher.startIndex, offsetBy: i)
+        result.append(cipher[index])
+    }
     
-    
-    return String(cipher.enumerated().compactMap { ($0.offset + 1) % code == 0 ? $0.element : nil })
+    return result
 }
