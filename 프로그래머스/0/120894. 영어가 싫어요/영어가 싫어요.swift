@@ -1,47 +1,30 @@
 import Foundation
 
 func solution(_ numbers:String) -> Int64 {
-    let dic = [
-        "zero": 0,
-        "one": 1,
-        "two": 2,
-        "three": 3,
-        "four": 4,
-        "five": 5,
-        "six": 6,
-        "seven": 7,
-        "eight": 8,
-        "nine": 9
-    ]
-    var stack: [Character] = []
-    var result: [Int] = []
-    
-    for c in numbers {
-        stack.append(c)
+    enum Numbers: String, CaseIterable {
+        case zero, one, two, three, four, five, six, seven, eight, nine
         
-        if stack.count >= 3 {
-            let key1 = String(stack.suffix(3)) 
-            if let n = dic[key1] {
-                result.append(n)
-                stack.removeLast(3)
-                continue
-            }
-            
-            let key2 = String(stack.suffix(4))
-            if let n = dic[key2] {
-                result.append(n)
-                stack.removeLast(4)
-                continue
-            }
-            
-            let key3 = String(stack.suffix(5))
-            if let n = dic[key3] {
-                result.append(n)
-                stack.removeLast(5)
-                continue
+        var numString: String {
+            switch self {
+                case .zero: return "0"
+                case .one: return "1"
+                case .two: return "2"
+                case .three: return "3"
+                case .four: return "4"
+                case .five: return "5"
+                case .six: return "6"
+                case .seven: return "7"
+                case .eight: return "8"
+                case .nine: return "9"
             }
         }
     }
     
-    return Int64(result.map { String($0) }.joined())!
+    var numbers = numbers
+    
+    for numStr in Numbers.allCases {
+        numbers = numbers.replacingOccurrences(of: numStr.rawValue, with: numStr.numString)
+    }
+    
+    return Int64(numbers)!
 }
