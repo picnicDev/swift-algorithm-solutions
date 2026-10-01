@@ -3,8 +3,8 @@ import Foundation
 func solution(_ array:[Int]) -> Int {
     var result = 0
     
-    for n in array {
-        result += Array(String(n)).filter { $0 == "7" }.count
+    array.forEach {
+        result += String($0).count(where: { $0 == "7" })
     }
     
     return result
