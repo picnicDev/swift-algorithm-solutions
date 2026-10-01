@@ -1,25 +1,25 @@
 import Foundation
 
 func solution(_ progresses:[Int], _ speeds:[Int]) -> [Int] {
-
-    var result: [Int] = []
-    var index = 0
-    var shoot = 0
+    var startIndexOfWork = 0
     var progresses = progresses
+    var result: [Int] = []
     
-    while index < progresses.count {
-        for i in index..<speeds.count {
-            progresses[i] += speeds[i]
+    while startIndexOfWork < progresses.count {
+        var done = 0
+        let needForDone = 100 - progresses[startIndexOfWork]
+        let timeForDone = (needForDone % speeds[startIndexOfWork]) == 0 ? needForDone / speeds[startIndexOfWork] : needForDone / speeds[startIndexOfWork] + 1
+        
+        for index in startIndexOfWork..<progresses.count {
+            progresses[index] += timeForDone * speeds[index]
         }
-    
-        if progresses[index] >= 100 {
-            shoot = 0
-            while index < progresses.count && progresses[index] >= 100 { 
-                shoot += 1
-                index += 1
-            }
-            result.append(shoot)
+        
+        while startIndexOfWork < progresses.count && progresses[startIndexOfWork] >= 100 {
+            done += 1
+            startIndexOfWork += 1
         }
+        
+        if done > 0 { result.append(done) }
     }
     
     return result
