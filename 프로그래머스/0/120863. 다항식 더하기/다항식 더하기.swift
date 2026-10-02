@@ -1,41 +1,18 @@
 import Foundation
 
 func solution(_ polynomial:String) -> String {
+    let components = polynomial.split(separator: " ").map { String($0) }
+    let xSum = components.filter { $0.contains("x") }.map { 
+        if $0 == "x" { return 1 }
+        else { return Int($0.replacingOccurrences(of: "x", with: ""))! }
+    }.reduce(0,+)
+    let numericSum = components.compactMap { Int($0) }.reduce(0,+)
     
-    let items = polynomial.split(separator: " ")
-    var result: [Int] = [0, 0]
-    
-    for item in items {
-        if item.contains("x") {
-            if item == "x" {
-                result[0] += 1
-            } else {
-                let nStr = item.split(separator: "x")
-                if let n = Int(nStr.first!) {
-                    result[0] += n    
-                }
-            }
-            
-        } else if let n = Int(item) {
-            result[1] += n
-        }
-    }
-    
-    
-    
-    if result[0] != 0 && result[1] != 0 {
-        if result[0] == 1 {
-            return "x + \(result[1])"
-        } else {
-            return "\(result[0])x + \(result[1])"
-        }
-    } else if result[0] != 0 {
-        if result[0] == 1 {
-            return "x"
-        } else {
-            return "\(result[0])x"
-        }
+    if numericSum == 0 {
+        return xSum == 1 ? "x" : "\(xSum)x"
+    } else if xSum == 0 {
+        return "\(numericSum)"
     } else {
-        return "\(result[1])"
+        return xSum == 1 ? "x + \(numericSum)" : "\(xSum)x + \(numericSum)"
     }
 }
