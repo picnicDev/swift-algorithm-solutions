@@ -2,18 +2,15 @@ import Foundation
 
 func solution(_ spell:[String], _ dic:[String]) -> Int {
     
-    for word in dic {
-        var flag = true
+    outFor: for word in dic.filter { $0.count == spell.count } {
+        var sameCount = 0
         
-        let wordSet = Set(word.map { String($0) })
         for c in spell {
-            if !wordSet.contains(c) {
-                flag = false
-                break
-            }
+            if word.contains(c) { sameCount += 1 }
+            else { continue outFor }
         }
-        
-        if flag { return 1 }
+            
+        if sameCount == spell.count { return 1 }
     }
     
     return 2
