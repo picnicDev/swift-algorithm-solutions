@@ -1,34 +1,36 @@
 import Foundation
 
 func solution(_ board:[[Int]]) -> Int {
-    var safeMap: [[Bool]] = Array(repeating: Array(repeating: true, count: board.count), count: board.count)
-    var around: [(Int, Int)] = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
-    var result = 0
+    typealias Pos = (x: Int, y: Int)
+    var board = board
     
-    func inBoard(_ pos: (Int, Int)) -> Bool {
-        return pos.0 >= 0 && pos.0 < board.count && pos.1 >= 0 && pos.1 < board.count
-    }
-    
-    for row in 0..<board.count {
-        for col in 0..<board.count {
-            if board[row][col] == 1 {
-                safeMap[row][col] = false
-                for pos in around {
-                    let aroundIndex = (row + pos.0, col + pos.1)
-                    if inBoard(aroundIndex) {
-                        safeMap[aroundIndex.0][aroundIndex.1] = false
-                    }
-                }
+    for i in 0..<board[0].count {
+        for j in 0..<board.count {
+            if board[i][j] == 1 {
+                setDangerousArea(from: (i, j))
             }
         }
     }
     
-    for line in safeMap {
-        for block in line {
-            if block == true { result += 1 }
+    return board.map { $0.count { $0 == 0 } }.reduce(0,+)
+    
+    func setDangerousArea(from pos: Pos) {
+        let directions: [Pos] = [
+            (-1, -1), (0, -1), (1, -1),
+            (-1, 0), (1, 0),
+            (-1, 1), (0, 1), (1, 1)
+        ]
+        
+        for move in directions {
+            let index: Pos = (pos.x + move.x, pos.y + move.y)
+            
+            if checkOutOfRange(of: index), board[index.x][index.y] != 1 {
+                board[index.x][index.y] = 2
+            }
         }
     }
     
-    return result
+    func checkOutOfRange(of pos: Pos) -> Bool {
+        return (0..<board[0].count).contains(pos.x) && (0..<board.count).contains(pos.y)
+    }
 }
-
