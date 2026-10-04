@@ -1,23 +1,20 @@
 import Foundation
 
 func solution(_ dots:[[Int]]) -> Int {
-    for i in 0..<dots.count-1 {
-        for j in i+1..<dots.count {
-            let other = [0, 1, 2, 3].filter{ $0 != i && $0 != j }
+    var dots = dots
+    var indexSet = [(0, 1, 2, 3), (0, 2, 1, 3), (0, 3, 1, 2)]
+    
+    for i in indexSet {
+        let (p1, p2, p3, p4) = (dots[i.0], dots[i.1], dots[i.2], dots[i.3])
             
-            let dot1 = dots[i]
-            let dot2 = dots[j]
-            let dot3 = dots[other[0]]
-            let dot4 = dots[other[1]]
-
-            let lean1 = Double(dot2[1] - dot1[1]) / Double(dot2[0] - dot1[0])
-            let lean2 = Double(dot4[1] - dot3[1]) / Double(dot4[0] - dot3[0])
-            if lean1 == lean2 { return 1 }
-        }
+        if (p1[0] == p2[0]) && (p3[0] == p4[0]) { return 1 }
+        if (p1[1] == p2[1]) && (p3[1] == p4[1]) { return 1 }
+            
+        let inclination1 = Double(p1[1] - p2[1]) / Double(p1[0] - p2[0])
+        let inclination2 = Double(p3[1] - p4[1]) / Double(p3[0] - p4[0])
+            
+        if inclination1 == inclination2 { return 1 } 
     }
     
     return 0
 }
-
-// 두 직선이 평행이 되려면 
-// 기울기가 같아야 해.
