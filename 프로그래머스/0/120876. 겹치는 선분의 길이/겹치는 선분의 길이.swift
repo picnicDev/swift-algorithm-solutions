@@ -2,24 +2,30 @@ import Foundation
 
 func solution(_ lines:[[Int]]) -> Int {
     var result = 0
-    var min = 100
-    var max = -100
+    var beforeLineStatus: [Bool] = Array(repeating: false, count: lines.count)
+    var currentLineStatus: [Bool] = Array(repeating: false, count: lines.count)
+    let min = lines.map { $0[0] }.min()!
+    let max = lines.map { $0[1] }.max()!
     
-    for line in lines {
-        if line[0] < min { min = line[0] }
-        if line[0] > max { max = line[0] }
-        if line[1] < min { min = line[1] }
-        if line[1] > max { max = line[1] }
-    }
-    
-    var used = Array(repeating: 0, count: max - min)
-    
-    for line in lines {
-        for i in line[0]..<line[1] {
-            let index = i - min
-            used[index] += 1
+    for point in min...max {
+        var localOverlap = Array(repeating: false, count: lines.count)
+        
+        for (index, line) in lines.enumerated() {
+            if (line[0]...line[1]).contains(point) { 
+                currentLineStatus[index] = true
+            } else {
+                currentLineStatus[index] = false
+            }
         }
+        
+        for (i, (before, current)) in zip(beforeLineStatus, currentLineStatus).enumerated() {
+            if before && current { localOverlap[i] = true }
+        }
+        
+        if localOverlap.filter { $0 }.count > 1 { result += 1 }
+
+        beforeLineStatus = currentLineStatus
     }
     
-    return used.filter({ $0 > 1 }).count
+    return result
 }
