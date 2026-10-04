@@ -1,16 +1,15 @@
 import Foundation
 
 func solution(_ n:Int) -> Int {
-    var arr: [Int] = []
-    var num = 1
+    var result = 0 
 
-    for _ in 1...n {
-        while num % 3 == 0 || String(num).contains("3") {
-            num += 1
+    for i in 1...n {
+        result += 1 
+        
+        while result % 3 == 0 || String(result).contains("3") {
+            result += 1
         }
-        arr.append(num)
-        num += 1
     }
     
-    return arr[n-1]
+    return result
 }
