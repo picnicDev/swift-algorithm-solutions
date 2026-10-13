@@ -2,15 +2,14 @@ import Foundation
 
 func solution(_ babbling:[String]) -> Int {
     let words = ["aya", "ye", "woo", "ma"]
-    var babbling: [String] = babbling
     
-    babbling = babbling.filter {
-        var s = $0
-        for word in words {
-            s = s.replacingOccurrences(of: word, with: "!")
+    let filtered = babbling.map { babble in
+        var babble = babble
+        words.forEach {
+            babble = babble.replacingOccurrences(of: $0, with: "+")
         }
-        return s.replacingOccurrences(of: "!", with: "").isEmpty
+        return Set(Array(babble))
     }
     
-    return babbling.count
+    return filtered.count(where: { $0 == ["+"] })
 }
