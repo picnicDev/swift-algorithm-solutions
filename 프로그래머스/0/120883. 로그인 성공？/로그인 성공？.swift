@@ -1,20 +1,31 @@
 import Foundation
 
 func solution(_ id_pw:[String], _ db:[[String]]) -> String {
-    enum State {
-        case success, fail, wrongPw
-    }
-    
-    var state: State = .fail
-    
-    for item in db {
-        if id_pw[0] == item[0] { 
-            state = .wrongPw
-            if id_pw[1] == item[1] {
-                state = .success
+    // 순회를 하면서 상태를 나눠. 
+    enum LoginStatus {
+        case login, fail, wrongPw
+        
+        var message: String {
+            switch self {
+                case .login: return "login"
+                case .fail: return "fail"
+                case .wrongPw: return "wrong pw"
             }
         }
     }
     
-    return state == .success ? "login" : state == .wrongPw ? "wrong pw" : "fail"
+    var status: LoginStatus = .fail
+    
+    for info in db {
+        if info[0] == id_pw[0] {
+            status = .wrongPw
+            
+            if info[1] == id_pw[1] {
+                status = .login
+                return status.message
+            }
+        } 
+    }
+    
+    return status.message
 }
