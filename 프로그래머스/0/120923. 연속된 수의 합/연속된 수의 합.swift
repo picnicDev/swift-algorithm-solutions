@@ -1,21 +1,10 @@
 import Foundation
 
 func solution(_ num:Int, _ total:Int) -> [Int] {
-    var result: [Int] = Array(-1000...1000)
-    var frontIndex = 1000
-    var backIndex = frontIndex + num - 1
-    var sum = Array(result[frontIndex...backIndex]).reduce(0,+)
+    let pivot = total / num
+    let min = num % 2 == 0 ? (pivot - num / 2 + 1) : (pivot - num / 2)
+    let max = pivot + num / 2
+    let nums = Array(min...max)
     
-    while sum != total {
-        if sum < total {
-            frontIndex += 1
-            backIndex += 1
-        } else {
-            frontIndex -= 1
-            backIndex -= 1
-        }
-        sum = Array(result[frontIndex...backIndex]).reduce(0, +)
-    }
-    
-    return Array(result[frontIndex...backIndex])
+    return nums
 }
