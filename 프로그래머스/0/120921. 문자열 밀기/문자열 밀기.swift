@@ -1,21 +1,16 @@
 import Foundation
 
 func solution(_ A:String, _ B:String) -> Int {
+    var a = Array(A)
+    var result = 0
     
-    var arr = Array(A)
-    var countLeft = 1
-    
-    if A == B { return 0 }
-    
-    for startIndex in stride(from: arr.count-1, to: 0, by: -1) {
-        var temp: [Character] = []
-        for add in 0..<arr.count {
-            temp.append(arr[(startIndex + add) % arr.count])
+    for _ in a {
+        if String(a) == B {
+            return result
         }
-        if String(temp) == B { 
-            return countLeft
-        }
-        countLeft += 1
+        let last = a.removeLast()
+        a.insert(last, at: 0)
+        result += 1
     }
     
     return -1
