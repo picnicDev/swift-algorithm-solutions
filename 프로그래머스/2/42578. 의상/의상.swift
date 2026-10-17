@@ -12,5 +12,5 @@ func solution(_ clothes:[[String]]) -> Int {
         itemNums.append(v.count + 1)
     }
     
-    return itemNums.count == 1 ? itemNums[0] - 1 : itemNums.reduce(1,*) - 1
+    return itemNums.reduce(1,*) - 1
 }
