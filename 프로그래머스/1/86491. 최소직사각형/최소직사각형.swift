@@ -1,13 +1,12 @@
 import Foundation
 
-func solution(_ sizes:[[Int]]) -> Int {
-    var maxNum = 0
-    var minNum = 0
-
-    for i in sizes {
-        maxNum = max(maxNum, i.max()!)
-        minNum = max(minNum, i.min()!)
+func solution(_ sizes:[[Int]]) -> Int {    
+    let sizes = sizes.map {
+        [max($0[0], $0[1]), min($0[0], $0[1])]
     }
-
-    return maxNum * minNum
+    
+    let width = sizes.map { $0[0] }.max()!
+    let height = sizes.map { $0[1] }.max()!
+    
+    return width * height
 }
