@@ -1,22 +1,25 @@
 import Foundation
 
 func solution(_ answers:[Int]) -> [Int] {
-    let cycle1 = [1, 2, 3, 4, 5]
-    let cycle2 = [2, 1, 2, 3, 2, 4, 2, 5]
-    let cycle3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
-    var scores = [0, 0, 0]
+    let answerOne = [1, 2, 3, 4, 5]
+    let answerTwo = [2, 1, 2, 3, 2, 4, 2, 5]
+    let answerThree = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+    var answerCount = [0, 0, 0]
+    var index = [0, 0, 0]
     var result: [Int] = []
     
-    for index in 0..<answers.count {
-        if cycle1[index % cycle1.count] == answers[index] { scores[0] += 1}
-        if cycle2[index % cycle2.count] == answers[index] { scores[1] += 1}
-        if cycle3[index % cycle3.count] == answers[index] { scores[2] += 1}
+    for answer in answers {
+        if answer == answerOne[index[0]] { answerCount[0] += 1 }
+        if answer == answerTwo[index[1]] { answerCount[1] += 1 }
+        if answer == answerThree[index[2]] { answerCount[2] += 1 }
+        index[0] = (index[0] + 1) % answerOne.count
+        index[1] = (index[1] + 1) % answerTwo.count
+        index[2] = (index[2] + 1) % answerThree.count
     }
-    
-    for (index, score) in scores.enumerated() {
-        if score == scores.max()! {
-            result.append(index+1)
-        }
+
+    let max = answerCount.max()
+    for (i, e) in answerCount.enumerated() {
+        if e == max { result.append(i+1) }
     }
     
     return result
