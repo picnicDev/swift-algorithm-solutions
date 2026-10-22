@@ -1,41 +1,46 @@
 import Foundation
 
 func solution(_ numbers:String) -> Int {
+    let min = Array(numbers).lazy.map { Int(String($0))! }.min()!
+    let max = Int(Array(numbers).lazy.map { Int(String($0))! }.sorted(by: >).map { String($0) }.joined())!
+    var numbersComponent = Array(repeating: 0, count: 10)
     var result = 0
-    var numbers: [Character] = Array(numbers)
-    var visited: Set<Int> = []
     
-    func dfs(_ numString: String, _ adder: Character, _ remains: [Character]) {        
-        var remains = remains
-        let currentNum = numString + String(adder)
-        let num = Int(currentNum)!
-        
-        if visited.contains(num) { return }
-        else { visited.insert(num) }
-        
-        if isPrime(num) { result += 1 }
-        if remains.isEmpty { return }
-        
-        for c in remains {
-            var copy = remains
-            let index = remains.firstIndex(of: c)!
-            copy.remove(at: index)
-            dfs(currentNum, c, copy)
+    numbers.forEach {
+        numbersComponent[Int(String($0))!] += 1
+    }
+    
+    for n in min...max {
+        if isComponent(n, of: numbersComponent) {
+            if isPrime(n) { result += 1 }
         }
     }
-             
-    dfs("0", "0", numbers)
-       
+    
     return result
 }
-    
+
 func isPrime(_ n: Int) -> Bool {
     if n <= 1 { return false }
     if n < 4 { return true }
     
-    for i in 2..<Int(sqrt(Double(n)))+1 {
+    for i in 2...Int(sqrt(Double(n))) {
         if n % i == 0 { return false }
     }
     
     return true
 }
+
+func isComponent(_ n: Int, of component: [Int]) -> Bool {
+    var nComponent = Array(repeating: 0, count: 10)
+    
+    String(n).forEach {
+        nComponent[Int(String($0))!] += 1
+    }
+    
+    for (n1, n2) in zip(nComponent, component) {
+        if n1 > n2 { return false }
+    }
+    
+    return true
+}
+
