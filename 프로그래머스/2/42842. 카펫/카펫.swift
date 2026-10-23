@@ -1,17 +1,22 @@
 import Foundation
 
 func solution(_ brown:Int, _ yellow:Int) -> [Int] {
-    var width = 0, height = 0
-    let sum = brown + yellow
+    var result: [Int] = []
+    let size = brown + yellow
+    var line1 = 3
     
-    for i in 1...(sum / 2) {
-        if sum % i == 0 {
-            width = sum / i
-            height = i
+    while true {
+        guard size % line1 == 0 else {
+            line1 += 1 
+            continue
         }
         
-        if (2*width) + (2*height) - 4 == brown { break }
+        let line2 = size / line1
+        
+        if (line1 - 2) * (line2 - 2) == yellow {
+            return [line1, line2].sorted(by: >)
+        } else { 
+            line1 += 1
+        }
     }
-    
-    return [width, height]
 }
