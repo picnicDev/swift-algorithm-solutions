@@ -1,5 +1,5 @@
 func solution(_ s:String) -> String {
-    var nums = s.split(separator: " ").map { Int(String($0))! }
+    let filtered = s.split(separator: " ").map { Int(String($0))! }.sorted()
     
-    return "\(nums.min()!) \(nums.max()!)"
+    return "\(filtered[0]) \(filtered[filtered.count-1])"
 }
